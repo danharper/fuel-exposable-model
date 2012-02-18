@@ -9,10 +9,10 @@
  * @link       http://github.com/danharper/fuel-expose
  */
 
-Autoloader::add_core_namespace('Expose');
+Autoloader::add_core_namespace('Exposable');
 
 Autoloader::add_classes(array(
-	'Expose\\Expose'          => __DIR__.'/classes/expose.php',
+	'Exposable\\Model'          => __DIR__.'/classes/expose.php',
 ));
 
 /* End of file bootstrap.php */

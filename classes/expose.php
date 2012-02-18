@@ -1,44 +1,58 @@
 <?php
 
-namespace Expose;
+namespace Exposable;
 
-class Expose
+class Model extends \Orm\Model
 {
-	final private function __construct() {}
+	/**
+	 * @var  array  contains a list of model fields which can be exposed on an API
+	 */
+	protected static $_exposable = array();
 
 	/**
-	 * Initialise FuelPHP package, load S3 auth keys and settings
-	 * @return void
+	 * Exposable computed/dynamic model fields
+	 * 
+	 * @param  Model $model The current model to computed exposable fields on
+	 * @return array computed/dynamic fields to expose
 	 */
-	public static function _init()
-	{
-	}
+	protected static function _exposable($model) {}
 
-	public static function forge($models)
-	{
-		if (is_array($models))
-		{
-			$r = array();
-			foreach ($models as $model)
-			{
-				$r[] = self::__expose_one($model);
-			}
-		}
-		else
-		{
-			$r = self::__expose_one($models);
-		}
-		return $r;
-	}
-
-	private static __expose_one($model)
+	/**
+	 * Expose
+	 * 
+	 * Get exposable data for model(s) provided. Will expose fields specified in the
+	 * $_exposable array and any computed fields returned in an array from the _exposable()
+	 * function
+	 * @param  array/model $models Model(s) to expose
+	 * @return array
+	 */
+	public static function expose($models)
 	{
 		$exposed = array();
-		foreach ($model::$_public_api as $expose)
+		if (is_array($models))
 		{
-			$exposed[$expose] = $model->$expose;
+			foreach ($models as $model)
+			{
+				$exposed[] = self::_expose_one($model);
+			}
 		}
-		return array_merge($exposed, $model::$_public_api_dynamic($model));
+		else {
+			$exposed[] = self::_expose_one($models);
+		}
+		return $exposed;
 	}
 
+	protected static function _expose_one($model)
+	{
+		$class = get_called_class();
+		$exposed = array();
+		foreach ($class::$_exposable as $key)
+		{
+			$exposed[$key] = $model->$key;
+		}
+		$dynamic = $class::_exposable($model);
+		if (is_array($dynamic))
+			return array_merge($exposed, $dynamic);
+		return $exposed;
+	}
 }
