@@ -3,10 +3,10 @@
 /**
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
- * @package    Fuel-Expose
+ * @package    Fuel-Exposable-Model
  * @version    1.0
  * @author     Dan Harper
- * @link       http://github.com/danharper/fuel-expose
+ * @link       http://github.com/danharper/fuel-exposable-model
  */
 
 Autoloader::add_core_namespace('Exposable');

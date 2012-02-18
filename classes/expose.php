@@ -7,7 +7,7 @@ class Model extends \Orm\Model
 	/**
 	 * @var  array  contains a list of model fields which can be exposed on an API
 	 */
-	protected static $_exposable = array();
+	protected static $_exposable_properties = array();
 
 	/**
 	 * Exposable computed/dynamic model fields
@@ -15,7 +15,7 @@ class Model extends \Orm\Model
 	 * @param  Model $model The current model to computed exposable fields on
 	 * @return array computed/dynamic fields to expose
 	 */
-	protected static function _exposable($model) {}
+	protected static function _exposable_computed($model) {}
 
 	/**
 	 * Expose
@@ -46,11 +46,11 @@ class Model extends \Orm\Model
 	{
 		$class = get_called_class();
 		$exposed = array();
-		foreach ($class::$_exposable as $key)
+		foreach ($class::$_exposable_properties as $key)
 		{
 			$exposed[$key] = $model->$key;
 		}
-		$dynamic = $class::_exposable($model);
+		$dynamic = $class::_exposable_computed($model);
 		if (is_array($dynamic))
 			return array_merge($exposed, $dynamic);
 		return $exposed;
