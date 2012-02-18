@@ -8,7 +8,7 @@ I recently built a RESTful API atop Fuel and found specifying fields to expose v
 
 ## Installation
 1. Clone or download the repo into your app's `fuel/packages/` directory.
-2. Add `fuel-exposable-model` to the array of packages to always load in `fuel/app/config/config.php`
+2. Add `fuel-exposable-model` (and `orm` if it's not there already) to the array of packages to always load in `fuel/app/config/config.php`
 
 ## Usage
 
