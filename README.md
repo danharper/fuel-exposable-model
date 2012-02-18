@@ -22,6 +22,7 @@ class Model_User extends Exposable\Model {
 Now in your Model, set the properties you wish to expose:
 
 ```php
+<?php
 protected static $_exposable_properties = array(
 	'id',
 	'username',
