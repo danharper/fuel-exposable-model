@@ -6,6 +6,10 @@ This package supplies you with an extension of Fuel's default `Orm\Model`: `Expo
 
 I recently built a RESTful API atop Fuel and found specifying fields to expose via the API to be painful, so wrote a few helper methods to allow each resource to specify exactly which fields to expose, along with the ability to expose computed/dynamic fields.
 
+## Installation
+1. Clone or download the repo into your app's `fuel/packages/` directory.
+2. Add `fuel-exposable-model` to the array of packages to always load in `fuel/app/config/config.php`
+
 ## Usage
 
 To use, simply change the class your Model extends from `Orm\Model` to `Exposable\Model`, eg:
