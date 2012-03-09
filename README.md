@@ -68,6 +68,85 @@ public function get_index()
 }
 ```
 
+### Second Level Exposures
+
+You may need to expose certain properties from a model's relation. This can be done by passing an array as a property, with the key as the name of the related model.
+
+For example, to expose a few of the user's billing details when exposing the user, you could do:
+
+```php
+<?php
+protected static $_exposable_properties = array(
+	'id',
+	'username',
+	'email',
+	'location',
+	'first_name',
+	'last_name',
+	'billing' => array(
+		'address',
+		'city',
+		'country',
+	),
+);
+```
+
+In JSON form, this would look like:
+
+```js
+{
+	id: 1,
+	username: 'danharper',
+	email: 'test@example.com',
+	location: 'Portsmouth, UK',
+	first_name: 'Dan',
+	last_name: 'Harper',
+	billing: {
+		address: '92 Lorem Ipsum St',
+		city: 'Portsmouth',
+		country: 'United Kingdom'
+	},
+	name: 'Dan Harper'
+}
+```
+
+Optionally, you could flatten the second level by passing `__flatten` as the first property in the array:
+
+```js
+<?php
+protected static $_exposable_properties = array(
+	'id',
+	'username',
+	'email',
+	'location',
+	'first_name',
+	'last_name',
+	'billing' => array(
+		'__flatten',
+		'address',
+		'city',
+		'country',
+	),
+);
+```
+
+Which would result in:
+
+```js
+{
+	id: 1,
+	username: 'danharper',
+	email: 'test@example.com',
+	location: 'Portsmouth, UK',
+	first_name: 'Dan',
+	last_name: 'Harper',
+	address: '92 Lorem Ipsum St',
+	city: 'Portsmouth',
+	country: 'United Kingdom',
+	name: 'Dan Harper'
+}
+```
+
 ## An Example
 
 As a run-down, imagine we have a Users resource with the following fields:
