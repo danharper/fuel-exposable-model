@@ -35,11 +35,11 @@ class Model extends \Orm\Model
 			{
 				$exposed[] = self::_expose_one($model);
 			}
+			return $exposed;
 		}
 		else {
-			$exposed[] = self::_expose_one($models);
+			return self::_expose_one($models);
 		}
-		return $exposed;
 	}
 
 	protected static function _expose_one($model)
