@@ -46,9 +46,9 @@ class Model extends \Orm\Model
 	{
 		$class = get_called_class();
 		$exposed = array();
-		foreach ($class::$_exposable_properties as $key)
+		foreach ($class::$_exposable_properties as $property)
 		{
-			$exposed[$key] = $model->$key;
+			$exposed[$property] = $model->$property;
 		}
 		$dynamic = $class::_exposable_computed($model);
 		if (is_array($dynamic))
