@@ -50,7 +50,12 @@ class Model extends \Orm\Model
 		{
 			if (is_array($property)) {
 				foreach ($property as $sub) {
-					$exposed[$key][$sub] = $model->$key->$sub;
+					if ($sub != '__flatten') {
+						if ($property[0] == '__flatten')
+							$exposed[$sub] = $model->$key->$sub;
+						else
+							$exposed[$key][$sub] = $model->$key->$sub;
+					}
 				}
 			}
 			else {
